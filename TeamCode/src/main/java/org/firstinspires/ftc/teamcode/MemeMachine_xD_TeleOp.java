@@ -37,42 +37,66 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import static android.R.attr.left;
+import static android.R.attr.right;
+
 /**
  * Demonstrates empty OpMode
  */
-@TeleOp(name="MemeMachine_xD_TeleOp", group="Indeterminate")
+@TeleOp(name = "MemeMachine_xD_TeleOp", group = "Indeterminate")
 public class MemeMachine_xD_TeleOp extends OpMode {
 
-  private ElapsedTime runtime = new ElapsedTime();
+    Hardware robot = new Hardware();
+    Lift lift = new Lift();
+    Drive drive = new Drive();
+    BallLoader ballLoader = new BallLoader();
+    Shooter shooter = new Shooter();
 
-  @Override
-  public void init() {
-    telemetry.addData("Status", "Initialized");
-  }
+    private ElapsedTime runtime = new ElapsedTime();
 
-  /*
-     * Code to run when the op mode is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
+    @Override
+    public void init() {
+        robot.init(hardwareMap);
+        lift.init(robot);
+
+        telemetry.addData("Status", "Initialized");
+        updateTelemetry(telemetry);
+    }
+
+    /*
+       * Code to run when the op mode is first enabled goes here
+       * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
+       */
+    @Override
+    public void init_loop() {
+    }
+
+    /*
+     * This method will be called ONCE when start is pressed
+     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
      */
-  @Override
-  public void init_loop() {
-  }
+    @Override
+    public void start() {
+        runtime.reset();
+    }
 
-  /*
-   * This method will be called ONCE when start is pressed
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  @Override
-  public void start() {
-    runtime.reset();
-  }
+    /*
+     * This method will be called repeatedly in a loop
+     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
+     */
+    @Override
+    public void loop() {
+        double left;
+        double right;
 
-  /*
-   * This method will be called repeatedly in a loop
-   * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-   */
-  @Override
-  public void loop() {
-    telemetry.addData("Status", "Run Time: " + runtime.toString());
-  }
+        left = gamepad1.left_stick_y;
+        right = gamepad1.right_stick_y;
+        robot.leftRearMotor.setPower(left);
+        robot.rightRearMotor.setPower(right);
+        robot.leftFrontMotor.setPower(left);
+        robot.rightFrontMotor.setPower(right);
+
+
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
+    }
 }
