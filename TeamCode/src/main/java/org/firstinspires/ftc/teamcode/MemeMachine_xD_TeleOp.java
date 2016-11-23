@@ -58,11 +58,11 @@ public class MemeMachine_xD_TeleOp extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
-//        lift.init(robot);
 //        drive.init(robot);
-//        ballLoader.init(robot);
         shooter.init(robot, gamepad1, telemetry);
 //        rangeSensor.init(robot);
+        lift.init(robot);
+        ballLoader.init(robot, gamepad1, telemetry);
 
         telemetry.addData("Status", "Initialized");
         updateTelemetry(telemetry);
@@ -92,6 +92,17 @@ public class MemeMachine_xD_TeleOp extends OpMode {
      */
     @Override
     public void loop() {
+        double left;
+        double right;
+
+        ballLoader.loop();
+
+        left = gamepad1.left_stick_y;
+        right = gamepad1.right_stick_y;
+//        robot.leftRearMotor.setPower(left);
+//        robot.rightRearMotor.setPower(right);
+//        robot.leftFrontMotor.setPower(left);
+//        robot.rightFrontMotor.setPower(right);
 
         drive.loop();
         shooter.loop();
