@@ -70,8 +70,8 @@ public class Hardware
         //define and initialize servos
         loadServo = hwMap.servo.get("load_servo");
         loadServo.setPosition(BEGIN_SERVO);
-//        pushServo = hwMap.servo.get("push_servo");
-//        pushServo.setPosition(MID_SERVO);
+        pushServo = hwMap.servo.get("push_servo");
+        pushServo.setPosition(MID_SERVO);
 
         //define and initialize buttons
 //        bottomTouchButton = hwMap.touchSensor.get("bottom_touch_button");
