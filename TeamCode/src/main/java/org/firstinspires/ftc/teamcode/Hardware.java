@@ -36,6 +36,7 @@ public class Hardware
     public Servo pushServo = null;
     public TouchSensor bottomTouchButton  = null;
     public TouchSensor topTouchButton  = null;
+    public RangeSensor rangeSensor = null;
 
     public static final double MID_SERVO       =  0.5 ;
 
@@ -54,46 +55,47 @@ public class Hardware
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        leftRearMotor = hwMap.dcMotor.get("left_rear_drive");
-        rightRearMotor = hwMap.dcMotor.get("right_rear_drive");
-        leftFrontMotor = hwMap.dcMotor.get("left_front_drive");
-        rightFrontMotor = hwMap.dcMotor.get("right_front_drive");
-        brushMotor = hwMap.dcMotor.get("brush_motor");
-        liftMotor = hwMap.dcMotor.get("lift_motor");
+//        leftRearMotor = hwMap.dcMotor.get("left_rear_drive");
+//        rightRearMotor = hwMap.dcMotor.get("right_rear_drive");
+//        leftFrontMotor = hwMap.dcMotor.get("left_front_drive");
+//        rightFrontMotor = hwMap.dcMotor.get("right_front_drive");
+//        brushMotor = hwMap.dcMotor.get("brush_motor");
+//        liftMotor = hwMap.dcMotor.get("lift_motor");
         leftSpinMotor = hwMap.dcMotor.get("left_spin_motor");
-        rightSpinMotor = hwMap.dcMotor.get("right_spin_motor");
+//        rightSpinMotor = hwMap.dcMotor.get("right_spin_motor");
+//        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range sensor");
 
         //define and initialize servos
         pushServo = hwMap.servo.get("push_servo");
         pushServo.setPosition(MID_SERVO);
 
         //define and initialize buttons
-        bottomTouchButton = hwMap.touchSensor.get("bottom_touch_button");
-        topTouchButton = hwMap.touchSensor.get("top_touch_button");
+//        bottomTouchButton = hwMap.touchSensor.get("bottom_touch_button");
+//        topTouchButton = hwMap.touchSensor.get("top_touch_button");
 
-        leftRearMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
-        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+//        leftRearMotor.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
+//        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
 
         // Set all motors to zero power
-        leftRearMotor.setPower(0);
-        rightRearMotor.setPower(0);
-        leftFrontMotor.setPower(0);
-        rightFrontMotor.setPower(0);
-        brushMotor.setPower(0);
-        liftMotor.setPower(0);
+//        leftRearMotor.setPower(0);
+//        rightRearMotor.setPower(0);
+//        leftFrontMotor.setPower(0);
+//        rightFrontMotor.setPower(0);
+//        brushMotor.setPower(0);
+//        liftMotor.setPower(0);
         leftSpinMotor.setPower(0);
-        rightSpinMotor .setPower(0);
+//        rightSpinMotor .setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        brushMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        brushMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        rightSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 
