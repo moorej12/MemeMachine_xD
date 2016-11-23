@@ -81,7 +81,6 @@ public class Shooter {
                     robot.pushServo.setPosition(SERVO_RETRACTED);
                     state = ShootingState.idle;
                 break;
-
         }
     }
 }
