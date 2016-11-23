@@ -20,9 +20,9 @@ public class Drive {
     Hardware robot = new Hardware();
 
     public void init() {
-        robot.init(hardwareMap);
-
-        telemetry.addData("Status", "Initialized");
-        updateTelemetry(telemetry);
+//        robot.init(hardwareMap);
+//
+//        telemetry.addData("Status", "Initialized");
+//        updateTelemetry(telemetry);
     }
 }
