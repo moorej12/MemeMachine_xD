@@ -20,9 +20,9 @@ public class Shooter {
     Hardware robot = new Hardware();
 
     public void init() {
-        robot.init(hardwareMap);
+//        robot.init(hardwareMap);
 
-        telemetry.addData("Status", "Initialized");
-        updateTelemetry(telemetry);
+//        telemetry.addData("Status", "Initialized");
+//        updateTelemetry(telemetry);
     }
 }

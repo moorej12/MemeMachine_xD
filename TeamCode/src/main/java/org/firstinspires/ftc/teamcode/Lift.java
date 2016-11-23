@@ -23,7 +23,7 @@ public class Lift {
     public void init(Hardware ahwMap) {
         robot = ahwMap;
 
-        telemetry.addData("Status", "Initialized");
-        updateTelemetry(telemetry);
+//        telemetry.addData("Status", "Initialized");
+//        updateTelemetry(telemetry);
     }
 }
