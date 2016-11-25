@@ -29,15 +29,18 @@ public class Hardware
 //    public DcMotor rightRearMotor = null;
 //    public DcMotor rightFrontMotor = null;
 //    public DcMotor leftFrontMotor = null;
-//    public DcMotor brushMotor = null;
+    public DcMotor brushMotor = null;
     public DcMotor liftMotor = null;
-//    public DcMotor leftSpinMotor  = null;
-//    public DcMotor rightSpinMotor  = null;
-//    public Servo pushServo = null;
+    public DcMotor leftSpinMotor  = null;
+    public DcMotor rightSpinMotor  = null;
     public TouchSensor bottomTouchButton  = null;
     public TouchSensor topTouchButton  = null;
+    public RangeSensor rangeSensor = null;
+    public Servo loadServo = null;
+    public Servo pushServo = null;
 
-    public static final double MID_SERVO       =  0.5 ;
+    public static final double MID_SERVO =  0.5 ;
+    public static final double BEGIN_SERVO = 0.0;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -58,14 +61,17 @@ public class Hardware
 //        rightRearMotor = hwMap.dcMotor.get("right_rear_drive");
 //        leftFrontMotor = hwMap.dcMotor.get("left_front_drive");
 //        rightFrontMotor = hwMap.dcMotor.get("right_front_drive");
-//        brushMotor = hwMap.dcMotor.get("brush_motor");
         liftMotor = hwMap.dcMotor.get("lift_motor");
-//        leftSpinMotor = hwMap.dcMotor.get("left_spin_motor");
+        brushMotor = hwMap.dcMotor.get("brush_motor");
+        leftSpinMotor = hwMap.dcMotor.get("left_spin_motor");
 //        rightSpinMotor = hwMap.dcMotor.get("right_spin_motor");
+//        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range sensor");
 
         //define and initialize servos
-//        pushServo = hwMap.servo.get("push_servo");
-//        pushServo.setPosition(MID_SERVO);
+        loadServo = hwMap.servo.get("load_servo");
+        loadServo.setPosition(BEGIN_SERVO);
+        pushServo = hwMap.servo.get("push_servo");
+        pushServo.setPosition(MID_SERVO);
 
         //define and initialize buttons
         bottomTouchButton = hwMap.touchSensor.get("bottom_touch_button");
@@ -79,9 +85,9 @@ public class Hardware
 //        rightRearMotor.setPower(0);
 //        leftFrontMotor.setPower(0);
 //        rightFrontMotor.setPower(0);
-//        brushMotor.setPower(0);
         liftMotor.setPower(0);
-//        leftSpinMotor.setPower(0);
+        brushMotor.setPower(0);
+        leftSpinMotor.setPower(0);
 //        rightSpinMotor .setPower(0);
 
         // Set all motors to run without encoders.
@@ -90,9 +96,9 @@ public class Hardware
 //        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        rightFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        brushMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        leftSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        brushMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        rightSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }

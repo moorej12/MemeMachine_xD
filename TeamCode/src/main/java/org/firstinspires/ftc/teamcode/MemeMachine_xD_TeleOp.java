@@ -51,6 +51,7 @@ public class MemeMachine_xD_TeleOp extends OpMode {
     Drive drive = new Drive();
     BallLoader ballLoader = new BallLoader();
     Shooter shooter = new Shooter();
+//    RangeSensor rangeSensor = new RangeSensor();
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -58,6 +59,10 @@ public class MemeMachine_xD_TeleOp extends OpMode {
     public void init() {
         robot.init(hardwareMap);
         lift.init(robot, gamepad1, telemetry);
+//        drive.init(robot);
+        shooter.init(robot, gamepad1, telemetry);
+//        rangeSensor.init(robot);
+        ballLoader.init(robot, gamepad1, telemetry);
 
         telemetry.addData("Status", "Initialized");
         updateTelemetry(telemetry);
@@ -69,6 +74,7 @@ public class MemeMachine_xD_TeleOp extends OpMode {
        */
     @Override
     public void init_loop() {
+
     }
 
     /*
@@ -88,7 +94,9 @@ public class MemeMachine_xD_TeleOp extends OpMode {
     public void loop() {
         double left;
         double right;
+
         lift.loop();
+        ballLoader.loop();
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
 //        robot.leftRearMotor.setPower(left);
@@ -96,7 +104,11 @@ public class MemeMachine_xD_TeleOp extends OpMode {
 //        robot.leftFrontMotor.setPower(left);
 //        robot.rightFrontMotor.setPower(right);
 
+        drive.loop();
+        shooter.loop();
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.update();
+        updateTelemetry(telemetry);
     }
 }
