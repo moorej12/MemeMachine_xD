@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -25,8 +26,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class Hardware
 {
     /* Public OpMode members. */
-//    public DcMotor leftRearMotor = null;
-//    public DcMotor rightRearMotor = null;
+    public DcMotor leftRearMotor = null;
+    public DcMotor rightRearMotor = null;
 //    public DcMotor rightFrontMotor = null;
 //    public DcMotor leftFrontMotor = null;
     public DcMotor brushMotor = null;
@@ -36,8 +37,9 @@ public class Hardware
     public TouchSensor bottomTouchButton  = null;
     public TouchSensor topTouchButton  = null;
     public RangeSensor rangeSensor = null;
-    public Servo loadServo = null;
+//    public Servo loadServo = null;
     public Servo pushServo = null;
+    public GyroSensor gyro;
 
     public static final double MID_SERVO =  0.5 ;
     public static final double BEGIN_SERVO = 0.0;
@@ -57,19 +59,19 @@ public class Hardware
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-//        leftRearMotor = hwMap.dcMotor.get("left_rear_drive");
-//        rightRearMotor = hwMap.dcMotor.get("right_rear_drive");
+        leftRearMotor = hwMap.dcMotor.get("left_rear_drive");
+        rightRearMotor = hwMap.dcMotor.get("right_rear_drive");
 //        leftFrontMotor = hwMap.dcMotor.get("left_front_drive");
 //        rightFrontMotor = hwMap.dcMotor.get("right_front_drive");
-        liftMotor = hwMap.dcMotor.get("lift_motor");
+       // liftMotor = hwMap.dcMotor.get("lift_motor");
         brushMotor = hwMap.dcMotor.get("brush_motor");
         leftSpinMotor = hwMap.dcMotor.get("left_spin_motor");
-//        rightSpinMotor = hwMap.dcMotor.get("right_spin_motor");
+        rightSpinMotor = hwMap.dcMotor.get("right_spin_motor");
 //        rangeSensor = hwMap.get(ModernRoboticsI2cRangeSensor.class, "range sensor");
 
         //define and initialize servos
-        loadServo = hwMap.servo.get("load_servo");
-        loadServo.setPosition(BEGIN_SERVO);
+//        loadServo = hwMap.servo.get("load_servo");
+//        loadServo.setPosition(BEGIN_SERVO);
         pushServo = hwMap.servo.get("push_servo");
         pushServo.setPosition(MID_SERVO);
 
@@ -88,7 +90,7 @@ public class Hardware
         liftMotor.setPower(0);
         brushMotor.setPower(0);
         leftSpinMotor.setPower(0);
-//        rightSpinMotor .setPower(0);
+        rightSpinMotor .setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -99,7 +101,7 @@ public class Hardware
         liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         brushMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        rightSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightSpinMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

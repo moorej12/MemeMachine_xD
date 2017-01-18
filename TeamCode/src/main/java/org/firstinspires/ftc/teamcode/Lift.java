@@ -22,30 +22,30 @@ import static android.R.attr.right;
 public class Lift {
 
 
-    Telemetry telemetry;
-    Hardware robot; // name of class name of variable = new name of class
-    Gamepad controller;
-
-    public void init(Hardware ahwMap, Gamepad xboxController, Telemetry telemetry) { // gamepad controller is my parameter
-        robot = ahwMap;
-        controller = xboxController;
-        telemetry.addData("Status", "Initialized");
-        this.telemetry=telemetry;
-    }
-
-    public void loop() {
-
-        double motorspeed = 0;
-
-
-        if (controller.dpad_up && !robot.topTouchButton.isPressed()){
-            motorspeed = 0.5;
-            telemetry.addData("move up","lift is moving up");
-        }
-        if (controller.dpad_down && !robot.bottomTouchButton.isPressed()){
-            motorspeed = -0.5;
-            telemetry.addData("move down","lift is moving down");
-        }
-        robot.liftMotor.setPower(motorspeed);
-    }
+//    Telemetry telemetry;
+//    Hardware robot; // name of class name of variable = new name of class
+//    Gamepad controller;
+//
+//    public void init(Hardware ahwMap, Gamepad xboxController, Telemetry telemetry) { // gamepad controller is my parameter
+//        robot = ahwMap;
+//        controller = xboxController;
+//        telemetry.addData("Status", "Initialized");
+//        this.telemetry=telemetry;
+//    }
+//
+//    public void loop() {
+//
+//        double motorspeed = 0;
+//
+//
+//        if (controller.dpad_up && !robot.topTouchButton.isPressed()){
+//            motorspeed = 0.5;
+//            telemetry.addData("move up","lift is moving up");
+//        }
+//        if (controller.dpad_down && !robot.bottomTouchButton.isPressed()){
+//            motorspeed = -0.5;
+//            telemetry.addData("move down","lift is moving down");
+//        }
+//        robot.liftMotor.setPower(motorspeed);
+//    }
 }

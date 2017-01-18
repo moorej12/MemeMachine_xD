@@ -51,7 +51,7 @@ public class BallLoader {
         elapsedTime.reset();
         robot.brushMotor.setMaxSpeed(MAX_BRUSH_SPEED);
         brushToggle = false;
-        robot.loadServo.setPosition(0.0);
+//        robot.loadServo.setPosition(0.0);
         servoAction = ServoState.kResting;
 
     }
@@ -70,14 +70,14 @@ public class BallLoader {
         if(servoAction == ServoState.kResting) {
             if(theGamepad.b) {
 
-                robot.loadServo.setPosition(LOAD_SERVO_POSITION);
+//                robot.loadServo.setPosition(LOAD_SERVO_POSITION);
                 servoAction = ServoState.kRising;
                 elapsedTime.reset();
             }
         }
         if(servoAction == ServoState.kRising) {
             if(elapsedTime.time() >= SERVO_TIME) {
-                robot.loadServo.setPosition(INITIAL_SERVO_POSITION);
+//                robot.loadServo.setPosition(INITIAL_SERVO_POSITION);
                 servoAction = ServoState.kFalling;
                 elapsedTime.reset();
             }
@@ -90,6 +90,6 @@ public class BallLoader {
         }
         //testing stuff; may not be necessary ALL of the time, use it to see what values are needed
         info.addData("Time", "The Time is: " + elapsedTime.time());
-        info.addData("Servo Position", "The Servo Position is: " + robot.loadServo.getPosition());
+//        info.addData("Servo Position", "The Servo Position is: " + robot.loadServo.getPosition());
     }
 }

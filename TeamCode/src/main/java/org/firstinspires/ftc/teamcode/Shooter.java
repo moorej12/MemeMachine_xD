@@ -64,6 +64,7 @@ public class Shooter {
             case spooling:
                 if(elapsedTime.time() < 1000 ) { //needs value
                     robot.leftSpinMotor.setPower(LAUNCH_SPEED);
+                    robot.rightSpinMotor.setPower(-LAUNCH_SPEED);
                 } else if(elapsedTime.time() > 1000) { //needs value
                     state = ShootingState.shooting;
                 }
@@ -78,6 +79,7 @@ public class Shooter {
 
             case shot:
                     robot.leftSpinMotor.setPower(0);
+                    robot.rightSpinMotor.setPower(0);
                     robot.pushServo.setPosition(SERVO_RETRACTED);
                     state = ShootingState.idle;
                 break;
