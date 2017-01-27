@@ -47,7 +47,7 @@ import static android.R.attr.right;
 public class MemeMachine_xD_TeleOp extends OpMode {
 
     Hardware robot = new Hardware();
-    Lift lift = new Lift();
+//    Lift lift = new Lift();
     Drive drive = new Drive();
     BallLoader ballLoader = new BallLoader();
     Shooter shooter = new Shooter();
@@ -58,8 +58,8 @@ public class MemeMachine_xD_TeleOp extends OpMode {
     @Override
     public void init() {
         robot.init(hardwareMap);
-        lift.init(robot, gamepad1, telemetry);
-//        drive.init(robot);
+//        lift.init(robot, gamepad1, telemetry);
+        drive.init(robot, gamepad1, telemetry);
         shooter.init(robot, gamepad1, telemetry);
 //        rangeSensor.init(robot);
         ballLoader.init(robot, gamepad1, telemetry);
@@ -95,14 +95,14 @@ public class MemeMachine_xD_TeleOp extends OpMode {
         double left;
         double right;
 
-        lift.loop();
+//        lift.loop();
         ballLoader.loop();
         left = gamepad1.left_stick_y;
         right = gamepad1.right_stick_y;
 //        robot.leftRearMotor.setPower(left);
 //        robot.rightRearMotor.setPower(right);
-//        robot.leftFrontMotor.setPower(left);
-//        robot.rightFrontMotor.setPower(right);
+        robot.leftFrontMotor.setPower(left);
+        robot.rightFrontMotor.setPower(right);
 
         drive.loop();
         shooter.loop();

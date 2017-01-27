@@ -32,8 +32,8 @@ public class BallLoader {
     ElapsedTime elapsedTime;
 
 
-    private static final int MAX_BRUSH_SPEED = 1;
-    private static final double BRUSH_SPEED = 1.0;
+    private static final int MAX_BRUSH_SPEED = 0;
+    private static final double BRUSH_SPEED = 0.7;
     private static final double LOAD_SERVO_POSITION = 50;
     private static final double INITIAL_SERVO_POSITION = 0.0;
     private static final double SERVO_TIME = 500;
@@ -51,7 +51,7 @@ public class BallLoader {
         elapsedTime.reset();
         robot.brushMotor.setMaxSpeed(MAX_BRUSH_SPEED);
         brushToggle = false;
-        robot.loadServo.setPosition(0.0);
+//        robot.loadServo.setPosition(0.0);
         servoAction = ServoState.kResting;
 
     }
@@ -67,29 +67,29 @@ public class BallLoader {
             robot.brushMotor.setPower(0);
         }
 
-        if(servoAction == ServoState.kResting) {
-            if(theGamepad.b) {
-
-                robot.loadServo.setPosition(LOAD_SERVO_POSITION);
-                servoAction = ServoState.kRising;
-                elapsedTime.reset();
-            }
-        }
-        if(servoAction == ServoState.kRising) {
-            if(elapsedTime.time() >= SERVO_TIME) {
-                robot.loadServo.setPosition(INITIAL_SERVO_POSITION);
-                servoAction = ServoState.kFalling;
-                elapsedTime.reset();
-            }
-        }
-        if(servoAction == ServoState.kFalling) {
-            if(elapsedTime.time() >= SERVO_TIME + 200) {
-                //NOT SURE IF THIS IS NECESSARY, BUT WANT TO ^^^^^^^^^^^^^ BE SURE THAT IT IS FOR SURE AT POSITION 0
-                servoAction = ServoState.kResting;
-            }
-        }
+//        if(servoAction == ServoState.kResting) {
+//            if(theGamepad.b) {
+//
+//                robot.loadServo.setPosition(LOAD_SERVO_POSITION);
+//                servoAction = ServoState.kRising;
+//                elapsedTime.reset();
+//            }
+//        }
+//        if(servoAction == ServoState.kRising) {
+//            if(elapsedTime.time() >= SERVO_TIME) {
+//                robot.loadServo.setPosition(INITIAL_SERVO_POSITION);
+//                servoAction = ServoState.kFalling;
+//                elapsedTime.reset();
+//            }
+//        }
+//        if(servoAction == ServoState.kFalling) {
+//            if(elapsedTime.time() >= SERVO_TIME + 200) {
+//                //NOT SURE IF THIS IS NECESSARY, BUT WANT TO ^^^^^^^^^^^^^ BE SURE THAT IT IS FOR SURE AT POSITION 0
+//                servoAction = ServoState.kResting;
+//            }
+//        }
         //testing stuff; may not be necessary ALL of the time, use it to see what values are needed
         info.addData("Time", "The Time is: " + elapsedTime.time());
-        info.addData("Servo Position", "The Servo Position is: " + robot.loadServo.getPosition());
+//        info.addData("Servo Position", "The Servo Position is: " + robot.loadServo.getPosition());
     }
 }

@@ -37,15 +37,14 @@ public class Lift {
 
         double motorspeed = 0;
 
-
-        if (controller.dpad_up && !robot.topTouchButton.isPressed()){
-            motorspeed = 0.5;
-            telemetry.addData("move up","lift is moving up");
-        }
-        if (controller.dpad_down && !robot.bottomTouchButton.isPressed()){
-            motorspeed = -0.5;
-            telemetry.addData("move down","lift is moving down");
-        }
-        robot.liftMotor.setPower(motorspeed);
+//        if (controller.dpad_up && !robot.topTouchButton.isPressed()){
+//            motorspeed = 0.5;
+//            telemetry.addData("move up","lift is moving up");
+//        }
+//        if (controller.dpad_down && !robot.bottomTouchButton.isPressed()){
+//            motorspeed = -0.5;
+//            telemetry.addData("move down","lift is moving down");
+//        }
+//        robot.liftMotor.setPower(motorspeed);
     }
 }
