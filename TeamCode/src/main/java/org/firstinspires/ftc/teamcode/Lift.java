@@ -21,7 +21,6 @@ import static android.R.attr.right;
 @TeleOp(name = "MemeMachine_xD_Lift", group = "Indeterminate")
 public class Lift {
 
-
     Telemetry telemetry;
     Hardware robot; // name of class name of variable = new name of class
     Gamepad controller;
