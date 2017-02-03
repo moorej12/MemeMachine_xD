@@ -60,7 +60,7 @@ public class MemeMachine_xD_TeleOp extends OpMode {
         robot.init(hardwareMap);
 //        lift.init(robot, gamepad1, telemetry);
         drive.init(robot, gamepad1, telemetry);
-        shooter.init(robot, gamepad1, telemetry);
+        shooter.init(robot, gamepad1, gamepad2, telemetry);
 //        rangeSensor.init(robot);
         ballLoader.init(robot, gamepad1, telemetry);
 

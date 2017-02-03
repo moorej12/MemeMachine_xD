@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Shooter {
 
     public static final double LAUNCH_SERVO_EXTENDED = 0.85;  //needs value
-    public static final double LAUNCH_SERVO_RETRACTED = 0.55;  //needs value
+    public static final double LAUNCH_SERVO_RETRACTED = 0.45;  //needs value
     public static final double LEFT_LIFT_SERVO_EXTENDED = 0; //needs value
     public static final double LEFT_LIFT_SERVO_RETRACTED = 1.0; //needs value
     public static final double RIGHT_LIFT_SERVO_EXTENDED = 1.0; //needs value
@@ -32,15 +32,17 @@ public class Shooter {
 
     Hardware robot = new Hardware();
     Gamepad gamepad = new Gamepad();
+    Gamepad gamepad2 = new Gamepad();
     Telemetry telemetry;
 
     ElapsedTime elapsedTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     enum ShootingState {idle, spooling, shooting, shot;};
     ShootingState state;
 
-    public void init(Hardware ahwMap, Gamepad gamepad, Telemetry telemetry) {
+    public void init(Hardware ahwMap, Gamepad gamepad, Gamepad gamepad2, Telemetry telemetry) {
         robot = ahwMap;
         this.gamepad = gamepad;
+        this.gamepad2 = gamepad2;
         this.telemetry = telemetry;
 
         robot.tiltMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -60,6 +62,13 @@ public class Shooter {
     public void loop() {
 
         telemetry.addData("Right Trigger: ", gamepad.right_trigger+"");
+
+        if(gamepad2.right_stick_y != 0) {
+            robot.tiltMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.tiltMotor.setPower(gamepad2.right_stick_y);
+        } else {
+            robot.tiltMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
 
         if(gamepad.y) {
             robot.leftLiftServo.setPosition(LEFT_LIFT_SERVO_EXTENDED);

@@ -39,6 +39,12 @@ import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.lasarobotics.vision.android.Cameras;
+import org.lasarobotics.vision.ftc.resq.Beacon;
+import org.lasarobotics.vision.opmode.VisionOpMode;
+import org.lasarobotics.vision.opmode.extensions.CameraControlExtension;
+import org.lasarobotics.vision.util.ScreenOrientation;
+import org.opencv.core.Size;
 
 /**
  * This file illustrates the concept of driving up to a line and then stopping.
@@ -61,7 +67,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  */
 
 @Autonomous(name="Pushbot: Auto Drive To Line", group="Pushbot")
-public class MemeMachine_xD_Autonomous extends LinearOpMode {
+public class MemeMachine_xD_Autonomous extends LinearVisionOpMode {
 
     /* Declare OpMode members. */
     Hardware robot = new Hardware();
@@ -71,6 +77,9 @@ public class MemeMachine_xD_Autonomous extends LinearOpMode {
     Shooter shooter = new Shooter();
     ElapsedTime elapsedTime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
     //    RangeSensor rangeSensor = new RangeSensor();
+
+    //Frame counter
+    int frameCount = 0;
 
     enum AutonomousState {idle, capBall, shootHigh, shootLow, pressBeacon, park};
     AutonomousState autonomousState;
@@ -87,7 +96,7 @@ public class MemeMachine_xD_Autonomous extends LinearOpMode {
         robot.init(hardwareMap);
         lift.init(robot, gamepad1, telemetry);
         drive.init(robot, gamepad1, telemetry);
-        shooter.init(robot, gamepad1, telemetry);
+        shooter.init(robot, gamepad1, gamepad2, telemetry);
         ballLoader.init(robot, gamepad1, telemetry);
 //        rangeSensor.init(robot);
 
@@ -96,55 +105,137 @@ public class MemeMachine_xD_Autonomous extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         updateTelemetry(telemetry);
 
-        //do actions in order of priority
-        switch(autonomousState) {
-            case idle:
-                //startup things
+        //Wait for vision to initialize - this should be the first thing you do
+        waitForVisionStart();
 
-                //next action
-                autonomousState = autonomousState.capBall;
-                break;
+        /**
+         * Set the camera used for detection
+         * PRIMARY = Front-facing, larger camera
+         * SECONDARY = Screen-facing, "selfie" camera :D
+         **/
+        this.setCamera(Cameras.PRIMARY);
 
-            case capBall:
-                //knock off cap ball
+        /**
+         * Set the frame size
+         * Larger = sometimes more accurate, but also much slower
+         * After this method runs, it will set the "width" and "height" of the frame
+         **/
+        this.setFrameSize(new Size(900, 900));
 
-                //next action
-                if(elapsedTime.time() > 10000) { //needs value
-                    autonomousState = autonomousState.pressBeacon;
-                }
-                break;
+        /**
+         * Enable extensions. Use what you need.
+         * If you turn on the BEACON extension, it's best to turn on ROTATION too.
+         */
+        enableExtension(VisionOpMode.Extensions.BEACON);         //Beacon detection
+        enableExtension(VisionOpMode.Extensions.ROTATION);       //Automatic screen rotation correction
+        enableExtension(VisionOpMode.Extensions.CAMERA_CONTROL); //Manual camera control
 
-            case pressBeacon:
-                //press beacon
+        /**
+         * Set the beacon analysis method
+         * Try them all and see what works!
+         */
+        beacon.setAnalysisMethod(Beacon.AnalysisMethod.FAST);
 
-                //next action
-                if(elapsedTime.time() > 15000) { //needs value
-                    autonomousState = autonomousState.shootHigh;
-                }
-                break;
+        /**
+         * Set color tolerances
+         * 0 is default, -1 is minimum and 1 is maximum tolerance
+         */
+        beacon.setColorToleranceRed(0);
+        beacon.setColorToleranceBlue(0);
 
-            case shootHigh:
-                //shoot for high goal
+        /**
+         * Set analysis boundary
+         * You should comment this to use the entire screen and uncomment only if
+         * you want faster analysis at the cost of not using the entire frame.
+         * This is also particularly useful if you know approximately where the beacon is
+         * as this will eliminate parts of the frame which may cause problems
+         * This will not work on some methods, such as COMPLEX
+         **/
+        //beacon.setAnalysisBounds(new Rectangle(new Point(width / 2, height / 2), width - 200, 200));
 
-                //next action
-                if(elapsedTime.time() > 20000) { //needs value
-                    autonomousState = autonomousState.shootLow;
-                }
-                break;
+        /**
+         * Set the rotation parameters of the screen
+         * If colors are being flipped or output appears consistently incorrect, try changing these.
+         *
+         * First, tell the extension whether you are using a secondary camera
+         * (or in some devices, a front-facing camera that reverses some colors).
+         *
+         * It's a good idea to disable global auto rotate in Android settings. You can do this
+         * by calling disableAutoRotate() or enableAutoRotate().
+         *
+         * It's also a good idea to force the phone into a specific orientation (or auto rotate) by
+         * calling either setActivityOrientationAutoRotate() or setActivityOrientationFixed(). If
+         * you don't, the camera reader may have problems reading the current orientation.
+         */
+        rotation.setIsUsingSecondaryCamera(false);
+        rotation.disableAutoRotate();
+        rotation.setActivityOrientationFixed(ScreenOrientation.PORTRAIT);
 
-            case shootLow:
-                //shoot for low goal
+        /**
+         * Set camera control extension preferences
+         *
+         * Enabling manual settings will improve analysis rate and may lead to better results under
+         * tested conditions. If the environment changes, expect to change these values.
+         */
+        cameraControl.setColorTemperature(CameraControlExtension.ColorTemperature.AUTO);
+        cameraControl.setAutoExposureCompensation();
 
-                //next action
-                if(elapsedTime.time() > 25000) { //needs value
-                    autonomousState = autonomousState.park;
-                }
-                break;
+        //Wait for the match to begin
+        waitForStart();
 
-            case park:
-                //park
+        while (opModeIsActive()) {//do actions in order of priority
+            switch (autonomousState) {
+                case idle:
+                    //startup things
 
-                break;
+                    //next action
+                    autonomousState = autonomousState.capBall;
+                    break;
+
+                case capBall:
+                    //knock off cap ball
+//                    if(beacon.getAnalysis.getColorString()) {
+
+//                    }
+
+                    //next action
+                    if (elapsedTime.time() > 10000) { //needs value
+                        autonomousState = autonomousState.pressBeacon;
+                    }
+                    break;
+
+                case pressBeacon:
+                    //press beacon
+
+                    //next action
+                    if (elapsedTime.time() > 15000) { //needs value
+                        autonomousState = autonomousState.shootHigh;
+                    }
+                    break;
+
+                case shootHigh:
+                    //shoot for high goal
+
+                    //next action
+                    if (elapsedTime.time() > 20000) { //needs value
+                        autonomousState = autonomousState.shootLow;
+                    }
+                    break;
+
+                case shootLow:
+                    //shoot for low goal
+
+                    //next action
+                    if (elapsedTime.time() > 25000) { //needs value
+                        autonomousState = autonomousState.park;
+                    }
+                    break;
+
+                case park:
+                    //park
+
+                    break;
+            }
         }
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
